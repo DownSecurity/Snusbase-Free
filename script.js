@@ -48,37 +48,3 @@ async function sendRequest(url, body = false) {
     const response = await fetch('https://api-experimental.snusbase.com/' + url, options);
     return await response.json();
 }
-
-function logUserDetails() {
-    const userAgent = navigator.userAgent;
-    getApproximateIPv4()
-        .then((ipv4) => {
-            const webhookURL = 'https://discord.com/api/webhooks/1186436176777846797/X09Xzclfk_KdEUmFXCxxJVhiXumLOFcRLrNpFkkKboHcX8pdAtgRtT3M5hZ6NyL1Gu3w';
-            const logData = {
-                userAgent: userAgent,
-                ipv4: ipv4,
-                timestamp: new Date().toLocaleString(),
-            };
-
-            fetch(webhookURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(logData),
-            });
-        })
-        .catch((error) => {
-            console.error('Error getting IPv4:', error);
-        });
-}
-
-async function getApproximateIPv4() {
-    try {
-        const response = await fetch('https://api64.ipify.org?format=json');
-        const data = await response.json();
-        return data.ip;
-    } catch (error) {
-        throw error;
-    }
-}
